@@ -1,0 +1,14 @@
+# Static analysis configuration. A clean build means zero warnings.
+include: package:flutter_lints/flutter.yaml
+
+linter:
+  rules:
+    # Stricter rules on top of flutter_lints.
+    always_declare_return_types: true
+    prefer_final_locals: true
+    prefer_const_constructors: true
+    prefer_const_constructors_in_immutables: true
+    prefer_const_declarations: true
+    prefer_single_quotes: true
+    avoid_print: true
+    unawaited_futures: true
