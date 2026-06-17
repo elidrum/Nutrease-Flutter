@@ -104,9 +104,16 @@ class DiaryRepositoryImpl implements DiaryRepository {
       await runCacheOp(() => _cache.replaceMeals(fascicoloId, date, meals));
       return Ok(meals);
     } catch (e) {
-      // Rete/DB ko: ripiego sul giorno in cache se ce l'ho (RF11).
-      final cached = await runCacheOp(() => _cache.getMeals(fascicoloId, date));
-      if (cached != null && cached.isNotEmpty) return Ok(cached);
+      // Rete/DB ko: ripiego sul giorno in cache (RF11). Distinguo "giornata mai
+      // sincronizzata" (→ errore di rete) da "giornata sincronizzata e vuota"
+      // (→ Ok lista vuota).
+      final synced =
+          await runCacheOp(() => _cache.isDaySynced(fascicoloId, date)) ?? false;
+      if (synced) {
+        final cached =
+            await runCacheOp(() => _cache.getMeals(fascicoloId, date));
+        return Ok(cached ?? const <Meal>[]);
+      }
       return Err(mapSupabaseError(e));
     }
   }
