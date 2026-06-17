@@ -1,0 +1,2 @@
+# Data layer — empty for now.
+# Sprints 2→6 add: dto/, mapper/, local/, repository/ (RepositoryImpl + Supabase access).

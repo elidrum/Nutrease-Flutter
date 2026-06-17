@@ -1,0 +1,3 @@
+# Domain layer — empty for now, and kept FRAMEWORK-FREE (ADR-0007).
+# Sprints 2→6 add: model/, repository/ (interfaces), usecase/.
+# Reuses core/error/{result,domain_error}.dart, which import no Flutter.
